@@ -1,6 +1,9 @@
 .container {
-    width: 200px;
-    background-color: burlywood;
+    width: 400px;
+    height: 100px;
+    background-color: rgb(247, 245, 243);
     border: 1px solid black;
-    margin-top: 200px;
+
+    padding: 20px;
+    border-radius: 5px;
 }

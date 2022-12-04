@@ -1,12 +1,33 @@
-import Message from '../Message';
 import '../../App.css';
+import {useEffect, useState} from 'react'
+import { Context } from '../../context';
+import {messages} from '../data/messageList';
+import AddMessageForm from '../AddMessageForm';
+import MessageContainer from '../MessageContainer';
 
 function App() {
-  const text = 'Hello world'
+  const [messageList, setmessageList] = useState([])
+ useEffect(() => {
+    const res = JSON.parse(localStorage.getItem('messageList'))
+    if (res) {
+      setmessageList(res)
+    }
+  }, [])
+ useEffect(() => {
+    localStorage.setItem('messageList', JSON.stringify(messageList))
+    if (messageList.length) {
+      setTimeout(() => {
+        alert(`Hello, ${messageList[messageList.length-1].author}`)
+      }, 2000)
+    }
+  }, [messageList])
   return (
-    <div className="App">
-      <Message text = {text}/>
-    </div>
+    <Context.Provider value = {{messageList, setmessageList}}>
+      <AddMessageForm />
+      <MessageContainer />
+
+
+    </Context.Provider>
   );
 }
 
