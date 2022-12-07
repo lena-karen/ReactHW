@@ -1,9 +1,14 @@
 .container {
-    width: 400px;
-    height: 100px;
-    background-color: rgb(247, 245, 243);
-    border: 1px solid black;
-
-    padding: 20px;
-    border-radius: 5px;
+    width: 300px;
+    border-bottom: 1px dashed black;
+   
+}
+.container p {
+    font-size: 24px;
+    color: black;
+}
+.container span {
+    font-size: 18px;
+    font-weight: normal;
+    color: red;
 }
