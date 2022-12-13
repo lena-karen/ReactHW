@@ -1,27 +1,30 @@
 import React, {useContext} from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import s from './index.module.css'
 import { Context } from '../../context'
-import ListItemText from '@mui/material/ListItemText'
+import { Link } from 'react-router-dom'
+
 export default function ChatListContainer() {
   const {chatList} = useContext(Context)
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <List >
-        {  
-          chatList.map((el, idx) => {
-            return (
-              <ListItem key={idx}> 
-                <ListItemText primary = {el.name} />
-              </ListItem>
-            )
-          })
-
-        } 
-      </List>
-    </Box>
+    <div className = {s.container}>
+      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <h2>List of existed chats</h2>
+        <List >
+          {  
+            chatList.map((el, idx) => {
+              return (
+               <Link key={idx} className = {s.list_item} to = {`/chats/${el.id}`} > 
+                  {el.name}
+                </Link>
+              )
+            })
+          } 
+        </List>
+      </Box>
+      
+    </div>
   )
 }

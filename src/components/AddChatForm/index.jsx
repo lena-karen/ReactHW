@@ -4,30 +4,28 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import { useParams } from 'react-router-dom';
 
-export default function AddMessageForm() {
+export default function AddChatForm() {
 
-    const {chatList, refMessageInput, addMessage} = useContext(Context);
-    const {currentId} = useParams();
-
+    const {chatList, refChatInput, addChat} = useContext(Context);
     const submit = (event) => {
         event.preventDefault();
-        const [message] = event.target;
-        
-        const chat = chatList.find(el => el.id == currentId);
-
-        const index = chat.messages.length + 1;
-
-        const newMessage = {
+        const [chat_name] = event.target;
+        const index = chatList.length + 1;
+        const newChat = {
             id: index, 
-            text: message.value, 
-            author: 'user'
+            name: chat_name.value, 
+            messages: [{
+                id: 1,
+                text: 'Hello',
+                author: 'BOT'
+            }]
         }
-        addMessage(newMessage, currentId)
-            
-        message.value = ''
+
+        addChat(newChat)
+        chat_name.value = ''
     }
+    
   return (
     <Box 
         component = 'form' 
@@ -42,20 +40,20 @@ export default function AddMessageForm() {
         onSubmit = {submit}
     >
         <TextField 
-            name = 'message' 
+            name = 'chat_name' 
             type = "text" 
-            label = 'Your message'
+            label = 'Enter new chat name'
             size = 'small'
-            inputRef = {refMessageInput}
+            inputRef = {refChatInput}
         />
 
         <Button 
             variant = "contained"
             endIcon = {<SendIcon />}
-            size = 'medium'
+            size = 'small'
             type = 'submit'
         >
-            Send
+            Create new chat
         </Button>
     </Box>
   )

@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+}
+.main_block {
+    display: flex;
+}
+.chat_block {
+    display: flex;
+    align-items: start;
+}

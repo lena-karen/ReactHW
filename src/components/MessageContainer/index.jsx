@@ -1,13 +1,12 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import Message from '../Message'
-import { Context } from '../../context'
 import s from './index.module.css'
-export default function MessageContainer() {
-    const {messageList} = useContext(Context);
+export default function MessageContainer({chat}) {
+
   return (
     <div className = {s.container}>
     {
-        messageList.map(el => <Message {...el} key = {el.id}/>)
+        chat.messages.map(el => <Message {...el} key = {el.id}/>)
     }
     </div>
   )
