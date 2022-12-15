@@ -1,7 +1,8 @@
 import '../../App.css'
 import {useEffect, useState, useRef} from 'react'
 import { Context } from '../../context'
-
+import { Provider } from 'react-redux'
+import {store} from '../../store'
 
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { blue } from '@mui/material/colors'
@@ -54,22 +55,24 @@ function App() {
   }
   
   return (
-    <ThemeProvider theme = {theme}>
-      <Context.Provider value = {{messageList, setMessageList, refChatInput, 
-        chatList, setChatList, addChat, addMessage}}>
-        <Nav />
-        <Routes>
-          <Route path = '/' element = {<HomePage/>}/>
-          <Route path = '/profile' element = {<ProfilePage/>}/>
-          <Route path = '/chats' element = {<ChatsPage/>}>
-            <Route path = ':currentId' element = {<MessagePage />} />
-            {/* <Route path = 'nochat' element = {<NoChat />}/> */}
-          </Route>
-          <Route path = '*' element = {<p>Page not found</p>}/>
-        </Routes>
+    <Provider store = {store}>
+      <ThemeProvider theme = {theme}>
+        <Context.Provider value = {{messageList, setMessageList, refChatInput, 
+          chatList, setChatList, addChat, addMessage}}>
+          <Nav />
+          <Routes>
+            <Route path = '/' element = {<HomePage/>}/>
+            <Route path = '/profile' element = {<ProfilePage/>}/>
+            <Route path = '/chats' element = {<ChatsPage/>}>
+              <Route path = ':currentId' element = {<MessagePage />} />
+              {/* <Route path = 'nochat' element = {<NoChat />}/> */}
+            </Route>
+            <Route path = '*' element = {<p>Page not found</p>}/>
+          </Routes>
 
-      </Context.Provider>
-    </ThemeProvider>
+        </Context.Provider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
