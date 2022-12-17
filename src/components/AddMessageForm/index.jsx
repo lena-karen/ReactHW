@@ -1,31 +1,38 @@
-import React, {useContext} from 'react'
+import React, {useState, useContext} from 'react'
+
 import { Context } from '../../context';
+import { useParams } from 'react-router-dom';
+import { addMessage } from '../../store/messages/actions';
+import { useSelector, useDispatch } from 'react-redux'
+import { getChatList } from '../../store/messages/selectors';
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import { useParams } from 'react-router-dom';
+
 
 export default function AddMessageForm() {
 
-    const {chatList, refMessageInput, addMessage} = useContext(Context);
+    const {refMessageInput} = useContext(Context);
+    const chatList = useSelector(getChatList)
+    const dispatch = useDispatch()
     const {currentId} = useParams();
 
+    const [msgText, setMsgText] = useState('')
     const submit = (event) => {
         event.preventDefault();
         const [message] = event.target;
-        
         const chat = chatList.find(el => el.id == currentId);
 
         const index = chat.messages.length + 1;
 
         const newMessage = {
             id: index, 
-            text: message.value, 
+            text: msgText, 
             author: 'user'
         }
-        addMessage(newMessage, currentId)
-            
+        dispatch(addMessage(newMessage, currentId))
         message.value = ''
     }
   return (
@@ -47,6 +54,7 @@ export default function AddMessageForm() {
             label = 'Your message'
             size = 'small'
             inputRef = {refMessageInput}
+            onChange = {event => setMsgText(event.target.value)}
         />
 
         <Button 

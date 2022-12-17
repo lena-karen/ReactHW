@@ -1,7 +1,9 @@
 import Button from '@mui/material/Button';
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import s from './index.module.css'
+
+import { NavLink } from 'react-router-dom'
+
 export default function Nav() {
   return (
     <nav className = {s.container} >

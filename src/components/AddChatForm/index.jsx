@@ -1,31 +1,38 @@
 import React, {useContext} from 'react'
+
 import { Context } from '../../context';
+import { useDispatch, useSelector} from 'react-redux'
+import { addChat } from '../../store/messages/actions';
+import { getChatList } from '../../store/messages/selectors';
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
+
 export default function AddChatForm() {
 
-    const {chatList, refChatInput, addChat} = useContext(Context);
+    const dispatch = useDispatch();
+    const chatList = useSelector(getChatList)
+
+    const {refChatInput} = useContext(Context);
     const submit = (event) => {
         event.preventDefault();
         const [chat_name] = event.target;
-        const index = chatList.length + 1;
-        const newChat = {
-            id: index, 
+
+        dispatch(addChat({
+            id: chatList.length + 1, 
             name: chat_name.value, 
             messages: [{
                 id: 1,
                 text: 'Hello',
                 author: 'BOT'
             }]
-        }
-
-        addChat(newChat)
+        }))
         chat_name.value = ''
     }
-    
+
   return (
     <Box 
         component = 'form' 
