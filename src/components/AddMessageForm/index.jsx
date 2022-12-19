@@ -2,14 +2,11 @@ import React, {useState, useContext} from 'react'
 
 import { Context } from '../../context';
 import { useParams } from 'react-router-dom';
-import { addMessage } from '../../store/messages/actions';
 import { useSelector, useDispatch } from 'react-redux'
 import { getChatList } from '../../store/messages/selectors';
+import { addMessageWithThunk } from '../../store/messages/actions'
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
+import MessageForm from '../MessageForm';
 
 
 export default function AddMessageForm() {
@@ -32,39 +29,14 @@ export default function AddMessageForm() {
             text: msgText, 
             author: 'user'
         }
-        dispatch(addMessage(newMessage, currentId))
+        dispatch(addMessageWithThunk(newMessage, currentId))
         message.value = ''
     }
   return (
-    <Box 
-        component = 'form' 
-        sx = {
-            {
-                display: 'flex',
-                '& .MuiTextField-root': {m: 4, width: '45ch', height: '5ch'},
-                '& .MuiButton-root': {m:4, width: '25ch', height: '5ch'}
-            }
-        }
-        autoComplete = "off"
-        onSubmit = {submit}
-    >
-        <TextField 
-            name = 'message' 
-            type = "text" 
-            label = 'Your message'
-            size = 'small'
-            inputRef = {refMessageInput}
-            onChange = {event => setMsgText(event.target.value)}
-        />
-
-        <Button 
-            variant = "contained"
-            endIcon = {<SendIcon />}
-            size = 'medium'
-            type = 'submit'
-        >
-            Send
-        </Button>
-    </Box>
+    <MessageForm 
+        submit = {submit} 
+        setMsgText = {setMsgText} 
+        refMessageInput = {refMessageInput} 
+    />
   )
 }

@@ -24,6 +24,7 @@ function App() {
   theme = responsiveFontSizes(theme)
 
   return (
+
       <ThemeProvider theme = {theme}>
         <Context.Provider value = {{refChatInput}}>
           <Nav />

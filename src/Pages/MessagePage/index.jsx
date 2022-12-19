@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useCallback, useContext, useEffect} from 'react'
 
 import s from './index.module.css'
 import { Context } from '../../context'
@@ -7,7 +7,7 @@ import MessageContainer from '../../components/MessageContainer'
 
 import { useParams, Navigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { addMessage } from '../../store/messages/actions'
+import { addMessage, addMessageWithThunk } from '../../store/messages/actions'
 import { getChatList } from '../../store/messages/selectors'
 
 export default function MessagePage() {  
@@ -19,32 +19,35 @@ export default function MessagePage() {
 
   const currentChat = chatList.find(el => el.id == currentId)
   
-  useEffect(() => {
-    let msg;
+  // useEffect(() => {
+  //   let msg;
 
-    if (chatList.length) {
-      msg = chatList.find(el => el.id == currentId).messages;
+  //   if (chatList.length) {
+  //     msg = chatList.find(el => el.id == currentId).messages;
     
-      if (msg.length && msg[msg.length - 1].author == 'user') {
-        const index = msg.length + 1;
+  //     if (msg.length && msg[msg.length - 1].author == 'user') {
+  //       const index = msg.length + 1;
 
-        const newMessage = {
-          id: index,
-          text: "I'm BOT",
-          author: 'BOT'
-        }
+  //       const newMessage = {
+  //         id: index,
+  //         text: "I'm BOT",
+  //         author: 'BOT'
+  //       }
         
-        const timeOutId = setTimeout(() => {
-          dispatch(addMessage(newMessage, currentId))
-        }, 1500)
+  //       const timeOutId = setTimeout(() => {
+  //         dispatch(addMessage(newMessage, currentId))
+  //       }, 1500)
         
-      }
-    }
-  }, [chatList])
+  //     }
+  //   }
+  // }, [chatList])
 
-    if (!chatList[currentId-1] && chatList) {
-      return <Navigate to = '/chats' replace />
-    }
+   const onAddMessage = useCallback(message => {
+     dispatch(addMessageWithThunk(message, currentId))
+   }, [currentId, dispatch])
+  if (!chatList[currentId-1] && chatList) {
+    return <Navigate to = '/chats' replace />
+  }
 
   return (
     <div className = {s.container}>

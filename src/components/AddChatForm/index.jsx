@@ -5,10 +5,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { addChat } from '../../store/messages/actions';
 import { getChatList } from '../../store/messages/selectors';
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
+import ChatForm from '../ChatForm';
 
 
 export default function AddChatForm() {
@@ -34,34 +31,9 @@ export default function AddChatForm() {
     }
 
   return (
-    <Box 
-        component = 'form' 
-        sx = {
-            {
-                display: 'flex',
-                '& .MuiTextField-root': {m: 4, width: '45ch', height: '5ch'},
-                '& .MuiButton-root': {m:4, width: '25ch', height: '5ch'}
-            }
-        }
-        autoComplete = "off"
-        onSubmit = {submit}
-    >
-        <TextField 
-            name = 'chat_name' 
-            type = "text" 
-            label = 'Enter new chat name'
-            size = 'small'
-            inputRef = {refChatInput}
-        />
-
-        <Button 
-            variant = "contained"
-            endIcon = {<SendIcon />}
-            size = 'small'
-            type = 'submit'
-        >
-            Create new chat
-        </Button>
-    </Box>
+    <ChatForm 
+        submit = {submit} 
+        refChatInput = {refChatInput}
+    />
   )
 }
