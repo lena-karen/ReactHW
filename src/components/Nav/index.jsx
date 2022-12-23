@@ -34,6 +34,15 @@ export default function Nav() {
                 Chats
             </Button>
         </NavLink>
+
+        <NavLink to = '/weather' >
+            <Button
+                variant = "contained"
+                size = 'large'
+            >
+                Weather
+            </Button>
+        </NavLink>
     </nav>
   )
 }

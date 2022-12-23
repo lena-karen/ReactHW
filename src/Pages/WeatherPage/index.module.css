@@ -1,0 +1,11 @@
+.weather_page {
+    text-align: center;
+    margin: 0 auto;
+}
+.weather_page p {
+    font-size: 18px;
+}
+.weather_page span {
+    color: darkblue;
+    font-weight: 600;
+}

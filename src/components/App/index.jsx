@@ -11,7 +11,7 @@ import HomePage from '../../Pages/HomePage'
 import ChatsPage from '../../Pages/ChatsPage'
 import ProfilePage from '../../Pages/ProfilePage'
 import MessagePage from '../../Pages/MessagePage'
-
+import WeatherPage from '../../Pages/WeatherPage'
 function App() {
  
   const refChatInput = useRef(null)
@@ -33,8 +33,8 @@ function App() {
             <Route path = '/profile' element = {<ProfilePage/>}/>
             <Route path = '/chats' element = {<ChatsPage/>}>
               <Route path = ':currentId' element = {<MessagePage />} />
-              {/* <Route path = 'nochat' element = {<NoChat />}/> */}
             </Route>
+            <Route path = '/weather' element = {<WeatherPage/>} />
             <Route path = '*' element = {<p>Page not found</p>}/>
           </Routes>
 
