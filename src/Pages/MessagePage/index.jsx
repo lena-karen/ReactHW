@@ -4,48 +4,47 @@ import s from './index.module.css'
 import { Context } from '../../context'
 import AddMessageForm from '../../components/AddMessageForm'
 import MessageContainer from '../../components/MessageContainer'
-
+import { messagesRef } from '../../services/firebase'
+import { update } from 'firebase/database'
 import { useParams, Navigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { addMessage, addMessageWithThunk } from '../../store/messages/actions'
-import { getChatList } from '../../store/messages/selectors'
 
-export default function MessagePage() {  
+export default function MessagePage({chatList}) {  
   
-  const chatList = useSelector(getChatList)
-  const dispatch = useDispatch()
+  // const chatList = useSelector(getChatList)
+  //const dispatch = useDispatch()
 
   const {currentId} = useParams()
 
   const currentChat = chatList.find(el => el.id == currentId)
-  
-  // useEffect(() => {
-  //   let msg;
+ 
+  useEffect(() => {
+    let msg;
 
-  //   if (chatList.length) {
-  //     msg = chatList.find(el => el.id == currentId).messages;
+    if (chatList.length) {
+      msg = chatList.find(el => el.id == currentId).messages;
     
-  //     if (msg.length && msg[msg.length - 1].author == 'user') {
-  //       const index = msg.length + 1;
+      if (msg.length && msg[msg.length - 1].author == 'user') {
+        const index = msg.length + 1;
 
-  //       const newMessage = {
-  //         id: index,
-  //         text: "I'm BOT",
-  //         author: 'BOT'
-  //       }
-        
-  //       const timeOutId = setTimeout(() => {
-  //         dispatch(addMessage(newMessage, currentId))
-  //       }, 1500)
-        
-  //     }
-  //   }
-  // }, [chatList])
+        const newMessage = {
+          [index]: {
+            id: index,
+            text: "I'm BOT",
+            author: 'BOT'            
+          }
 
-   const onAddMessage = useCallback(message => {
-     dispatch(addMessageWithThunk(message, currentId))
-   }, [currentId, dispatch])
-  if (!chatList[currentId-1] && chatList) {
+        }
+        
+        const timeOutId = setTimeout(() => {
+          update(messagesRef(currentId), newMessage)
+        }, 1500)
+        
+      }
+    }
+  }, [chatList])
+
+ 
+  if (!chatList) {
     return <Navigate to = '/chats' replace />
   }
 
@@ -55,8 +54,8 @@ export default function MessagePage() {
         currentChat &&
         <div>
           <p>You are in chat named {currentChat.name}</p> 
-          <AddMessageForm />
-          <MessageContainer  />
+          <AddMessageForm chatList = {chatList} />
+          <MessageContainer  chatList = {chatList}/>
         </div>
       }
 

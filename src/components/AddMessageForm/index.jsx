@@ -2,21 +2,21 @@ import React, {useState, useContext} from 'react'
 
 import { Context } from '../../context';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { getChatList } from '../../store/messages/selectors';
-import { addMessageWithThunk } from '../../store/messages/actions'
 
+import { push, set, update } from 'firebase/database'
+import { messagesRef, chatsRef, chatByIdRef } from '../../services/firebase';
 import MessageForm from '../MessageForm';
 
 
-export default function AddMessageForm() {
+export default function AddMessageForm({chatList}) {
 
     const {refMessageInput} = useContext(Context);
-    const chatList = useSelector(getChatList)
-    const dispatch = useDispatch()
+   // const chatList = useSelector(getChatList)
+   // const dispatch = useDispatch()
     const {currentId} = useParams();
 
     const [msgText, setMsgText] = useState('')
+
     const submit = (event) => {
         event.preventDefault();
         const [message] = event.target;
@@ -24,12 +24,28 @@ export default function AddMessageForm() {
 
         const index = chat.messages.length + 1;
 
+
         const newMessage = {
-            id: index, 
+          [index]: {
             text: msgText, 
-            author: 'user'
-        }
-        dispatch(addMessageWithThunk(newMessage, currentId))
+            author: 'user',
+            id: index
+          } }
+
+      update(messagesRef(currentId), newMessage)
+
+    //   setTimeout(() => {
+    //     const index = chat.messages.length + 1;
+    //     const newBotMessage = {
+    //       [index]: {
+    //         text: "I'm BOT", 
+    //         author: 'BOT',
+    //         id: index
+    //       } }
+    //     update(messagesRef(currentId), newBotMessage)
+    // }, 1500)
+
+
         message.value = ''
     }
   return (

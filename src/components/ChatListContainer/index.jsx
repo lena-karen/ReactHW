@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react'
+import React, {useEffect, useContext, useState} from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import s from './index.module.css'
@@ -8,14 +8,22 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteChat } from '../../store/messages/actions'
 import { getChatList } from '../../store/messages/selectors'
+import { remove, val, onValue } from 'firebase/database'
+import { chatByIdRef, chatsRef } from '../../services/firebase'
+export default function ChatListContainer({chatList}) {
 
-export default function ChatListContainer() {
-
-  const {refChatInput} = useContext(Context)
+  const {refChatInput} = useContext(Context) 
+ // const [chats, setChats] = useState(chatList)
   useEffect(() => {refChatInput.current.focus();}, [])
 
-  const chatList = useSelector(getChatList)
-  const dispatch = useDispatch()
+  const onDelete = (id) => {
+    
+    remove(chatByIdRef(id))
+
+  }
+ 
+  //const chatList = useSelector(getChatList)
+ // const dispatch = useDispatch()
 
   return (
     <div className = {s.container}>
@@ -30,7 +38,7 @@ export default function ChatListContainer() {
                       {el.name}
                     </Link>
                     <Link 
-                      onClick = {() => dispatch(deleteChat(el.id))}
+                      onClick = {() => onDelete(el.id)}
                       to = '/chats' className = {s.close}>
                     x
                     </Link>

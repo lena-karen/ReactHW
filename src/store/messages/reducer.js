@@ -12,6 +12,7 @@ export const chatsReducer = (state = initialState, action) => {
             ]
 
         case ADD_MESSAGE:
+            console.log('state',state)
             const activeChat = state.find(el => el.id == action.payload.chat_id)
             activeChat.messages.push(action.payload.message)
 

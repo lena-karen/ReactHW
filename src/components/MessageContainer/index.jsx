@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getChatList } from '../../store/messages/selectors'
 
-export default function MessageContainer() {
-  const chatList = useSelector(getChatList)
+export default function MessageContainer({chatList}) {
+  //const chatList = useSelector(getChatList)
   const {currentId} = useParams()
-  
+ 
   const chat = chatList.find(el => el.id == currentId)
 
   return (

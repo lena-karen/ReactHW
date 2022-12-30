@@ -12,8 +12,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['profile'],
-    blacklist: ['weather']
+    blacklist: ['profile', 'weather', 'isAuth', 'chats'],
+   // blacklist: ['weather']
 }
 const rootReducer = combineReducers({
     profile: profileReducer,
