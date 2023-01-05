@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing weather request reducer reducer snapshot 1`] = `
+Object {
+  "current_weather": Object {
+    "temperature": "",
+    "winddirection": "",
+    "windspeed": "",
+  },
+  "error": false,
+  "loading": false,
+}
+`;
+
+exports[`testing weather request reducer snapshot 1`] = `
+Object {
+  "current_weather": Object {
+    "temperature": "",
+    "winddirection": "",
+    "windspeed": "",
+  },
+  "error": false,
+  "loading": false,
+}
+`;
+
+exports[`testing weather request reducer snapshot after GET_SUCCESS action 1`] = `
+Object {
+  "current_weather": Object {
+    "temperature": "",
+    "winddirection": "",
+    "windspeed": "",
+  },
+  "error": false,
+  "loading": false,
+}
+`;
+
+exports[`testing weather request reducer state snapshot 1`] = `
+Object {
+  "current_weather": Object {
+    "temperature": "",
+    "winddirection": "",
+    "windspeed": "",
+  },
+  "error": false,
+  "loading": false,
+}
+`;

@@ -7,14 +7,16 @@ import { logOut } from '../../services/firebase';
 import { selectAuth } from '../../store/profile/selectors';
 import { toAuth } from '../../store/profile/actions';
 export default function Nav() {
-const isAuth = useSelector(selectAuth)
-const navigate = useNavigate()
-const dispatch = useDispatch()
-const handleLogout = async () => {
-    await logOut()
-    dispatch(toAuth(false))
-    console.log('/login', isAuth)
-}
+    
+    const isAuth = useSelector(selectAuth)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const handleLogout = async () => {
+        await logOut()
+        dispatch(toAuth(false))
+        console.log('/login', isAuth)
+    }
+
 return (
     <nav className = {s.container} >
         <NavLink to = '/' >
